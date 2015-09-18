@@ -1,6 +1,6 @@
 {
   "name": "youtrack-slack-bot",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "connect via XMPP to Youtrack and publish messages to a Slack channel via a webook",
   "main": "config.js",
   "scripts": {
@@ -11,7 +11,7 @@
     "type": "git",
     "url": "https://github.com/cinchcast/youtrack-slack-bot.git"
   },
-  "author": "",
+  "author": "radius314",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/cinchcast/youtrack-slack-bot/issues"
