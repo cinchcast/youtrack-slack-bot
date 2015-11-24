@@ -35,7 +35,7 @@ client.on('stanza', function(stanza) {
     if (stanza.is('message') &&
         (stanza.attrs.type !== 'error')) {
         var xmppPayload = ltx.parse(stanza.root().toString());
-        var message = "";
+        var message = "", payload;
         if (xmppPayload.getChild("body") != null) {
             message = xmppPayload.getChild("body").getText();
         }
@@ -49,17 +49,19 @@ client.on('stanza', function(stanza) {
             });
 
 	    for (var i = 0; i < config.slackPayloads.length; i++) {
-		console.log("Checking message against filter: " + config.slackPayloads[i].filter);
-		if (message.indexOf(config.slackPayloads[i].filter) > -1) {
-            		var payload = config.slackPayloads[i];
-			break;
-		}
-            }
+    		console.log("Checking message against filter: " + config.slackPayloads[i].filter);
+    		if (message.indexOf(config.slackPayloads[i].filter) > -1) {
+                	payload = config.slackPayloads[i];
+    			    break;
+    		}
+        }
 
-	    payload.text = message.replace(config.filter, '');
-            console.log('Sending message to channel ' + payload.channel + ': ' + payload.text);
-            req.write(JSON.stringify(payload));
-            req.end();
+        if (payload) {
+    	    payload.text = message.replace(config.filter, '');
+                console.log('Sending message to channel ' + payload.channel + ': ' + payload.text);
+                req.write(JSON.stringify(payload));
+                req.end();
+            }
         }
     }
 });
